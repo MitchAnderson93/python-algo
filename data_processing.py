@@ -9,21 +9,32 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from dateutil.relativedelta import relativedelta
 
+# Custom tools
+from analyzer import TrendAnalyzer
+
+
 class DataStorage:
     def __init__(self, db_file):
         self.db_file = db_file
 
     def store_manifest_data(self, manifest, build_db=False):
         if build_db and os.path.exists(self.db_file):
-            os.remove(self.db_file)  # Delete the existing database file
+            os.remove(self.db_file)
 
         if build_db:
-            # Create an empty database file
             open(self.db_file, 'w').close()
 
         conn = sqlite3.connect(self.db_file)
         manifest.to_sql('Manifest', conn, if_exists='replace', index=False)
         conn.close()
+
+    def create_manifest(self, df, build_db=False):
+        # Create a manifest table
+        manifest = df[['Ticker', 'Sector']].copy()
+        manifest['Table_Name'] = manifest['Ticker'] + '.AX'
+        last_scan_date = datetime.today().strftime('%Y-%m-%d')
+        manifest['Last Scan Date'] = last_scan_date
+        return manifest
 
     def load_manifest_data(self):
         conn = sqlite3.connect(self.db_file)
@@ -36,18 +47,24 @@ class DataStorage:
         data_with_index = data.reset_index()  # Reset index to include the "Date" column
         data_with_index.to_sql(table_name, conn, if_exists='replace', index=False)
         conn.close()
-    
+
     def get_table_data(self, table_name):
         conn = sqlite3.connect(self.db_file)
         data = pd.read_sql_query(f'SELECT * FROM "{table_name}"', conn)
         conn.close()
         return data
 
+    def store_analyzed_data(self, table_name, data):
+        conn = sqlite3.connect(self.db_file)
+        data.to_sql(table_name, conn, if_exists='replace', index=False)
+        conn.close()
+
 class DataSource:
     def __init__(self, ticker):
         self.ticker = ticker
         self.end_date = datetime.today().strftime('%Y-%m-%d')
         self.end_date = datetime.strptime(self.end_date, '%Y-%m-%d')
+        # Calculate the start date 2 years before the current date
         self.start_date = (self.end_date - relativedelta(years=2)).strftime('%Y-%m-%d')
 
     def fetch_historical_prices(self):
@@ -55,30 +72,31 @@ class DataSource:
         return self.data
 
     def get_historical_prices(self):
-        # Calculate the start date 2 years before the current date
         self.data = self.fetch_historical_prices()
         return self.data
 
-    def extract_date_from_text(self,text):
+    def extract_date_from_text(self, text):
         date_str = text.split('Data last updated: ')[1].split(' (')[0]
         return datetime.strptime(date_str, '%I:%M%p %d/%m/%y').strftime('%Y-%m-%d')
+
 
 class DataAnalysis:
     def __init__(self, db_file):
         self.db_file = db_file
         self.data = None
-    
-    def analyze_data(self, ticker, data):
-        # Perform analysis on the data for the given ticker
-        # ...
-        print('Performing analysis..')
-        pass
 
+    def analyze_data(self, ticker, data):
+        # Perform linear regression analysis
+        print('Performing tasks..')
+        # ...
+        pass
+        
     def perform_linear_regression(self, data):
         # Perform linear regression analysis
         print('Performing linear regressions..')
         # ...
         pass
+
 
 class WebScrape:
     def __init__(self, url):

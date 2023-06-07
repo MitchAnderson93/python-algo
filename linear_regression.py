@@ -1,9 +1,10 @@
 import numpy as np
 
+
 class LinearRegression:
     def __init__(self, data):
         self.data = data
-    
+
     def calculate_linear_regression(self):
         # Calculate linear regression coefficients
         x = self.data['Days'].values

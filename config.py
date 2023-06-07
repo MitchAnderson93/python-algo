@@ -1,6 +1,6 @@
-class GlobalVariables:
+class Config:
     def __init__(self):
-        # Global variables
+        # Change as needed
         self.db_file = 'db.sqlite3'
         self.entry_threshold = -0.01  # 5% price decline
         self.exit_threshold = 0.01  # 5% price increase
@@ -9,4 +9,4 @@ class GlobalVariables:
         self.max_allocation = self.max_trade_size * 0.1  # Maximum allocation per trade (10% of max trade size)
         self.show_charts = True
         self.source_manifest = 'https://www.marketindex.com.au/asx-listed-companies'
-        self.build_db = True
+        self.build_db = False
