@@ -8,9 +8,10 @@ class GlobalVariables:
     def __init__(self):
         # Global variables
         self.build_db = True
+        # ensure there is a blank db.sqlite3 file in root
 ```
 
-Builds a local DB with 2400 tickers (if enabled) and a manifest specific table for lookups (e.g. BHP / Materials / BHP.AX).
+Builds a local DB with 2400 symbols (if enabled) and a manifest specific table for lookups (e.g. BHP / Materials / BHP.AX). Each symbol table contains 2 years historical data (approx. 100mb when complete)
 
 **Manifest table:**<BR>
 Ticker | Sector | Table_Name | Last Scan Date<BR>

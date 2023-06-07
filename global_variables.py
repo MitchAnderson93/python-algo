@@ -9,4 +9,4 @@ class GlobalVariables:
         self.max_allocation = self.max_trade_size * 0.1  # Maximum allocation per trade (10% of max trade size)
         self.show_charts = True
         self.source_manifest = 'https://www.marketindex.com.au/asx-listed-companies'
-        self.build_db = False
+        self.build_db = True
