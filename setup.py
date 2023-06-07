@@ -2,11 +2,12 @@ import pandas as pd
 from datetime import datetime
 
 #Custom tools
+from config import Config
 from data_processing import DataStorage, WebScrape
 
 class Instance:
-    def __init__(self, config):
-        self.config = config
+    def __init__(self):
+        config = Config()
 
         # Access the variables
         self.db_file = config.db_file

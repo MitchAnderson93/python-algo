@@ -26,7 +26,7 @@ class TrendAnalyzer:
         self.data['BB_UPPER'] = indicator_bb.bollinger_hband()
         self.data['BB_LOWER'] = indicator_bb.bollinger_lband()
 
-    def chart(self):
+    def fundamentals_chart(self):
         # Set dark mode style
         plt.style.use('dark_background')
 
@@ -43,14 +43,14 @@ class TrendAnalyzer:
         ax1.plot(self.data['Date'], self.data['bb_lower'], label='Bollinger Bands Lower')
         ax1.set_xlabel('Date')
         ax1.set_ylabel('Price')
-        ax1.set_title(self.ticker)
+        ax1.set_title('Fundamentals for '+self.ticker)
         ax1.legend()
 
         # Plot the RSI
         ax2.plot(self.data['Date'], self.data['rsi'], label='RSI')
         ax2.set_xlabel('Date')
         ax2.set_ylabel('RSI')
-        ax2.set_title('RSI')
+        ax2.set_title('Relative strength index')
         ax2.legend()
 
         # Adjust the layout and spacing between subplots
