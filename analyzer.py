@@ -1,5 +1,8 @@
 import ta
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from datetime import datetime, timedelta
+import pandas as pd
 
 
 class TrendAnalyzer:
@@ -33,25 +36,40 @@ class TrendAnalyzer:
         # Create a figure and subplots for the two visualizations
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
 
+        # Convert 'Date' column to datetime format
+        self.data['Date'] = pd.to_datetime(self.data['Date'])
+
+        # Get the date range for the last 90 days
+        last_90_days = datetime.now() - timedelta(days=90)
+        filtered_data = self.data[self.data['Date'] >= last_90_days]
+
         # Plot the stock price with moving averages and Bollinger Bands
-        ax1.plot(self.data['Date'], self.data['Close'], label='Closing Price')
-        ax1.plot(self.data['Date'], self.data['ma25'], label='SMA 25')
-        ax1.plot(self.data['Date'], self.data['ma50'], label='SMA 50')
-        ax1.plot(self.data['Date'], self.data['ma75'], label='SMA 75')
-        ax1.plot(self.data['Date'], self.data['ma200'], label='SMA 200')
-        ax1.plot(self.data['Date'], self.data['bb_upper'], label='Bollinger Bands Upper')
-        ax1.plot(self.data['Date'], self.data['bb_lower'], label='Bollinger Bands Lower')
+        ax1.plot(filtered_data['Date'], filtered_data['Close'], label='Closing Price')
+        ax1.plot(filtered_data['Date'], filtered_data['ma25'], label='SMA 25')
+        ax1.plot(filtered_data['Date'], filtered_data['ma50'], label='SMA 50')
+        ax1.plot(filtered_data['Date'], filtered_data['ma75'], label='SMA 75')
+        ax1.plot(filtered_data['Date'], filtered_data['ma200'], label='SMA 200')
+        ax1.fill_between(filtered_data['Date'], filtered_data['bb_upper'], filtered_data['bb_lower'], color='lightblue', alpha=0.2, label='Bollinger Bands')
         ax1.set_xlabel('Date')
         ax1.set_ylabel('Price')
-        ax1.set_title('Fundamentals for '+self.ticker)
+        ax1.set_title('Fundamentals for ' + self.ticker)
         ax1.legend()
 
+        # Format the x-axis tick labels as year/month/day
+        ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+
         # Plot the RSI
-        ax2.plot(self.data['Date'], self.data['rsi'], label='RSI')
+        ax2.plot(filtered_data['Date'], filtered_data['rsi'], label='RSI')
         ax2.set_xlabel('Date')
         ax2.set_ylabel('RSI')
         ax2.set_title('Relative strength index')
         ax2.legend()
+
+        # Format the x-axis tick labels as year/month/day
+        ax2.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+
+        # Rotate the x-axis tick labels for better readability
+        plt.xticks(rotation=45)
 
         # Adjust the layout and spacing between subplots
         fig.tight_layout()
