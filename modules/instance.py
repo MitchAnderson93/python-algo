@@ -2,29 +2,30 @@ import pandas as pd
 from datetime import datetime
 
 #Custom tools
-from config import Config
-from data_processing import DataStorage, WebScrape
+from strategies.config import Config
 
 class Instance:
     def __init__(self):
-        config = Config()
+        #Custom tools
+        from . import TrendAnalyzer
+        from . import DataStorage, DataSource, WebScrape
 
         # Access the variables
+        config = Config()
         self.db_file = config.db_file
         self.build_db = config.build_db
         self.source_manifest = config.source_manifest
-
-        storage = DataStorage(self.db_file)
-
+        self.datastore = DataStorage(self.db_file)
+        
         if self.build_db:
             # Scrape data
-            scrape = WebScrape(source_manifest)
+            scrape = WebScrape(self.source_manifest)
             df = scrape.scrape_data()
-            manifest = storage.create_manifest(df, build_db=True)
-            storage.store_manifest_data(manifest, build_db=True)
+            manifest = self.datastore.create_manifest(df, build_db=True)
+            self.datastore.store_manifest_data(manifest, build_db=True)
         else:
             #Get manifest if rebuild (build_db) is false
-            manifest = storage.load_manifest_data()
+            manifest = self.datastore.load_manifest_data()
 
         if self.build_db:
             # Fetch historical prices and analyze data for each ticker
@@ -36,16 +37,11 @@ class Instance:
                 #Get each price (2y) and write to DB tables
                 data = DataSource(ticker).get_historical_prices()
                 
-                # Create an instance of TrendAnalyzer
+                # Create an instance of TrendAnalyzer to auto populate db with SMA/RSI/BB for demo
                 analyzer = TrendAnalyzer(ticker, data)
-                
-                # Calculate the technical indicators
                 analyzer.calculate_technical_indicators()
                 
                 # Store the modified historical prices in a separate table
-                storage.store_historical_prices(table_name, analyzer.data)
+                self.datastore.store_historical_prices(table_name, analyzer.data)
                 
                 pass
-        
-        #init data storage
-        self.datastore = DataStorage(self.db_file)

@@ -9,9 +9,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from dateutil.relativedelta import relativedelta
 
-# Custom tools
-from analyzer import TrendAnalyzer
-
 
 class DataStorage:
     def __init__(self, db_file):
@@ -79,24 +76,17 @@ class DataSource:
         date_str = text.split('Data last updated: ')[1].split(' (')[0]
         return datetime.strptime(date_str, '%I:%M%p %d/%m/%y').strftime('%Y-%m-%d')
 
-
 class DataAnalysis:
     def __init__(self, db_file):
         self.db_file = db_file
         self.data = None
+        self.orders = None
 
-    def analyze_data(self, ticker, data):
-        # Perform linear regression analysis
-        print('Performing tasks..')
-        # ...
-        pass
-        
     def perform_linear_regression(self, data):
         # Perform linear regression analysis
         print('Performing linear regressions..')
         # ...
         pass
-
 
 class WebScrape:
     def __init__(self, url):

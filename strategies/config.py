@@ -1,6 +1,6 @@
 class Config:
     def __init__(self):
-        # Change as needed
+        # Change as needed / change to dataset.sqlite3 and build_db true before commit
         self.db_file = 'db.sqlite3'
         self.entry_threshold = -0.01  # 5% price decline
         self.exit_threshold = 0.01  # 5% price increase
