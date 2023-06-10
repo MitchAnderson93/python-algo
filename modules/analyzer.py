@@ -30,12 +30,15 @@ class TrendAnalyzer:
         self.data['BB_LOWER'] = indicator_bb.bollinger_lband()
 
     # Defaults without order but can show a merged dataset (BUY/SELL)
-    def fundamentals_chart(self, orders = False, filter = 0):
+    def fundamentals_chart(self, orders = False, filter = 0, RSI = False):
         # Set dark mode style
         plt.style.use('dark_background')
 
         # Create a figure and subplots for the two visualizations
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
+        if RSI:
+            fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
+        else:
+            fig, ax1 = plt.subplots(1, figsize=(10, 8))
 
         # Convert 'Date' column to datetime format
         self.data['Date'] = pd.to_datetime(self.data['Date'])
@@ -66,15 +69,16 @@ class TrendAnalyzer:
         # Format the x-axis tick labels as year/month/day
         ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
-        # Plot the RSI
-        ax2.plot(filtered_data['Date'], filtered_data['RSI'], label='RSI')
-        ax2.set_xlabel('Date')
-        ax2.set_ylabel('RSI')
-        ax2.set_title('Relative strength index')
-        ax2.legend()
+        if RSI:
+            # Plot the RSI
+            ax2.plot(filtered_data['Date'], filtered_data['RSI'], label='RSI')
+            ax2.set_xlabel('Date')
+            ax2.set_ylabel('RSI')
+            ax2.set_title('Relative strength index')
+            ax2.legend()
 
-        # Format the x-axis tick labels as year/month/day
-        ax2.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+            # Format the x-axis tick labels as year/month/day
+            ax2.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
         if orders:
             # Plot buy markers
