@@ -2,3 +2,9 @@
 __pycache__
 db.sqlite3
 venv
+.DS_Store
+../.DS_Store
+lean.json
+./quantconnect-lib/data/
+./quantconnect-lib/current_portfolio/.idea/*
+./quantconnect-lib/current_portfolio/.vscode
