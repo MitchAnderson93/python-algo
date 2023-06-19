@@ -1,14 +1,20 @@
 
-# Quant notebook including quantconnect-lib/current_portfolio
+# Python notebook for ASX analysis
 
-Testing a quant ASX/Python notebook (using pandas, sqlite3, numpy, bs4/selenium, TA, yfinance, backtrader, matplotlib etc) in an Object Oriented format. Also has sub folder for running quantconnect cloud strategies (non-asx) (./quantconnect-lib/current_portfolio).
+I made this ASX/Python notebook (using pandas, sqlite3, numpy, bs4/selenium, TA, yfinance, matplotlib, quantconnect etc) in an Object Oriented format. It has sub folder for running quantconnect cloud strategies (non-asx) (./quantconnect-lib/current_portfolio) which is a work in progress (I need to clean this up as I expand beyond just ASX)
 
 Features:
 - Builds local dataset (2 years historical data) to date
 - Get dataset for specific symbol (includes SMA, RSI, BB bands)
 - Generate a fundamentals chart (days) that accepts orders to reflect buy/sell signals
-- Can modify/create new strategies and pass them to backtrader to show profit/loss
+- Reusable logging for trades/profit and loss across modules
+- A mean reversion strategy (work in progress) (./strategies/strategies.py)
+- A function to return linear regression coherants using numpy 
+
+Other ideas:
+- Build an integration with Sharesight for ASX trades (Sharesight REST API)
 - Search for a symbol, name or sector (return 1 or more results) - TO DO
+- A basic AI models to try and predict a future buy? (based on historic data)
 
 **Installation**
 
