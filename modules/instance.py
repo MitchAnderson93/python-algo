@@ -1,12 +1,12 @@
 import pandas as pd
 from datetime import datetime
 
-#Custom tools
+# Custom tools
 from strategies.config import Config
 
 class Instance:
     def __init__(self):
-        #Custom tools
+        # Custom tools
         from . import TrendAnalyzer
         from . import DataStorage, DataSource, WebScrape
 
@@ -18,7 +18,6 @@ class Instance:
         self.datastore = DataStorage(self.db_file)
         
         if self.build_db:
-            # Scrape data
             scrape = WebScrape(self.source_manifest)
             df = scrape.scrape_data()
             manifest = self.datastore.create_manifest(df, build_db=True)

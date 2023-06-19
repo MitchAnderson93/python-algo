@@ -30,7 +30,7 @@ class TrendAnalyzer:
         self.data['BB_LOWER'] = indicator_bb.bollinger_lband()
 
     # Defaults without order but can show a merged dataset (BUY/SELL)
-    def fundamentals_chart(self, orders = False, filter = 0, RSI = False):
+    def fundamentals_chart(self, orders=False, filter=0, RSI=False):
         # Set dark mode style
         plt.style.use('dark_background')
 
@@ -82,14 +82,20 @@ class TrendAnalyzer:
 
         if orders:
             # Plot buy markers
-            buy_dates = filtered_data[filtered_data['BUY'] == 1]['Date']
-            buy_prices = filtered_data[filtered_data['BUY'] == 1]['Close']
+            buy_dates = filtered_data[filtered_data['Trade'] > 0]['Date']
+            buy_prices = filtered_data[filtered_data['Trade'] > 0]['Close']
             ax1.scatter(buy_dates, buy_prices, color='green', marker='^', label='Buy')
 
+            for date in buy_dates:
+                print(date)
+
             # Plot sell markers
-            sell_dates = filtered_data[filtered_data['SELL'] == 1]['Date']
-            sell_prices = filtered_data[filtered_data['SELL'] == 1]['Close']
+            sell_dates = filtered_data[filtered_data['Trade'] < 0]['Date']
+            sell_prices = filtered_data[filtered_data['Trade'] < 0]['Close']
             ax1.scatter(sell_dates, sell_prices, color='red', marker='v', label='Sell')
+
+            for date in sell_dates:
+                print(date)
 
         # Rotate the x-axis tick labels for better readability
         plt.xticks(rotation=45)

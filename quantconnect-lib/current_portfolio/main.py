@@ -16,8 +16,8 @@ Portfolio 2 - Allocation (150k cash)
     self.cardano_allocation = 0.13 (19,500)
     self.polkadot_allocation = 0.10 (15,000)
     self.sol_allocation = 0.10 (15,000)
-    self.dog_allocation = 0.3 (4,500)
-    self.whole_market = 0.2 (3,000)
+    self.dog_allocation = 0.03 (4,500)
+    self.whole_market = 0.02 (3,000)
 
     Timeframe June 2021 - Dec 2021
 
@@ -27,10 +27,9 @@ Portfolio 3 - Longshot/HIO 0.035
     Target exit: at or over 0.055 (48.64% / $24,324.32)
     
 Dollar cost averaged
-Tiemframe: 6 months - expected high season Dec 
-
-
+Timeframe: 6 months - expected high season Dec 
 '''
+
 from AlgorithmImports import *
 from datetime import time
 from QuantConnect import *

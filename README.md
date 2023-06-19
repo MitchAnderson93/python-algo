@@ -1,7 +1,7 @@
 
-# Swing trading toolkit
+# Quant notebook including quantconnect-lib/current_portfolio
 
-Python notebook for end of day securities analysis (using pandas, sqlite3, numpy, bs4/selenium, TA, yfinance, backtrader, matplotlib etc) in an Object Oriented format. 
+Testing a quant ASX/Python notebook (using pandas, sqlite3, numpy, bs4/selenium, TA, yfinance, backtrader, matplotlib etc) in an Object Oriented format. Also has sub folder for running quantconnect cloud strategies (non-asx) (./quantconnect-lib/current_portfolio).
 
 Features:
 - Builds local dataset (2 years historical data) to date

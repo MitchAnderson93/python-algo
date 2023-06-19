@@ -9,7 +9,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from dateutil.relativedelta import relativedelta
 
-
 class DataStorage:
     def __init__(self, db_file):
         self.db_file = db_file
@@ -92,13 +91,13 @@ class WebScrape:
     def __init__(self, url):
         self.url = url
 
-    # Scrape data using BS4
+    # Scrape data using BS4 
+    # sorry site owner, I will make my own one day <3
     def scrape_data(self):
         chrome_options = Options()
         chrome_options.add_argument('--headless')  # Enable headless mode
         driver = webdriver.Chrome()  # or any other browser driver
         driver.get(self.url)
-
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         table_div = soup.find('div', {'id': 'sticky-table'})
         rows = table_div.find('tbody').find_all('tr')
