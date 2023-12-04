@@ -1,6 +1,9 @@
 import sqlite3
 import json
 
+def percentage_difference(a, b):
+    return abs(a - b) / ((a + b) / 2) * 100
+
 def filter_price_near_atl(stock):
     current_price = float(stock.get("current_price", 0))
     ATL = float(stock.get("ATL", 0))
@@ -8,9 +11,6 @@ def filter_price_near_atl(stock):
 
 def filter_dividend_yield(stock):
     return float(stock.get("dividend_yield", 0)) > 8
-
-def percentage_difference(a, b):
-    return abs(a - b) / ((a + b) / 2) * 100
 
 def main():
     conn = sqlite3.connect("db.sqlite")
