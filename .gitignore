@@ -2,5 +2,7 @@
 env/
 ml/
 training_data
-data/db.sqlite
-data/matched-lvr/20231024
+db.sqlite
+data/csv/raw/Accepted_Shares.pdf
+data/csv/raw/lvr.pdf
+data/csv/raw/legacy.pdf
