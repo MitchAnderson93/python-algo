@@ -1,7 +1,7 @@
 from system.common import yf, log_message
 
 def calculate_metrics(stock_code):
-    stock_data = yf.download(stock_code, period="5y", progress=False)
+    stock_data = yf.download(stock_code, period="max", progress=False)
     if stock_data.empty:
         log_message(f"{stock_code} is empty or delisted.")
         return {
@@ -19,7 +19,7 @@ def calculate_metrics(stock_code):
     delta = stock_data['Close'].diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
-    
+
     RS = gain / loss
     RSI = 100 - (100 / (1 + RS))
     SMA20 = stock_data['Close'].rolling(window=20).mean()

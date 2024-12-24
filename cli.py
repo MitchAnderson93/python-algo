@@ -32,7 +32,7 @@ def run_setup_script():
     if os.path.exists(setup_path):
         subprocess.run(["python", setup_path])
     else:
-        print("Error: system/setup.py not found.")
+        print("Error: system/setup.py not found.") 
 
 def run_update_script():
     """Run the update logic in system/setup.py."""

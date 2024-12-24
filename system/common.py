@@ -18,12 +18,14 @@ processed_path = os.path.join(data_path, "processed")
 # sys path for shared functions
 sys.path.append(lib_path)
 
-# Data analysis 
+# Data analysis tasks
 import json
 import sqlite3 as sql3
 import pandas as pd
 import yfinance as yf
 from datetime import datetime
+
+# data/scraping etc 
 import fitz  # PyMuPDF
 import re # regex in lvr script
 import csv  # Import the csv module from the standard library
