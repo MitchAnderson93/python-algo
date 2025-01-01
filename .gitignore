@@ -2,7 +2,9 @@
 env/
 ml/
 training_data
+.DS_Store
 db.sqlite
+data/csv/.DS_Store
 data/csv/raw/Accepted_Shares.pdf
 data/csv/raw/lvr.pdf
 data/csv/raw/legacy.pdf

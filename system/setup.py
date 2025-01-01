@@ -39,9 +39,15 @@ if user_input.lower() in ['yes', 'y']:
         
         # Ensure all keys are present in the DataFrame
         for key in ['RSI14', 'SMA20', 'SMA50', 'SMA200', 'dividend_yield', 'ATH', 'ATL', 'current_price']:
-            merged_df.at[idx, key] = metrics.get(key, None)
+            value = metrics.get(key, None)
+            if isinstance(value, pd.Series):
+                value = value.iloc[-1] if not value.empty else None
+            merged_df.at[idx, key] = value
+        
+        # Save progress incrementally
+        merged_df.iloc[[idx]].to_sql('LVR', conn, if_exists='append', index=False)
+        log_message(f"Updated metrics for {stock_code}")
 
-    merged_df.to_sql('LVR', conn, if_exists='replace')
     conn.close()
 
     # Log matched data

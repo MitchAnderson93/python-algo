@@ -16,10 +16,10 @@ def calculate_metrics(stock_code):
         }
     
     stock_info = yf.Ticker(stock_code)
+
     delta = stock_data['Close'].diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
-
     RS = gain / loss
     RSI = 100 - (100 / (1 + RS))
     SMA20 = stock_data['Close'].rolling(window=20).mean()
@@ -30,8 +30,21 @@ def calculate_metrics(stock_code):
     ATL = stock_data['Close'].min()
     current_price = stock_data['Close'].iloc[-1]
 
-    one_year_ago = stock_info.history(period="1y").index[0]
-    dividends_past_year = stock_info.dividends.loc[one_year_ago:]
+    try:
+        one_year_ago = stock_info.history(period="1y").index[0]
+        dividends_past_year = stock_info.dividends.loc[one_year_ago:]
+    except Exception as e:
+        log_message(f"Error with 1-year lookback for {stock_code}: {e}. Using max period as fallback.")
+        dividends_past_year = stock_info.dividends
+
+    if dividends_past_year.empty:
+        try:
+            max_period_ago = stock_info.history(period="max").index[0]
+            dividends_past_year = stock_info.dividends.loc[max_period_ago:]
+        except Exception as e:
+            log_message(f"Error with max period lookback for {stock_code}: {e}. No dividends available.")
+            dividends_past_year = pd.Series([])
+
     ttm_dividends = dividends_past_year.sum()
     dividend_yield = (ttm_dividends / current_price) * 100
 
