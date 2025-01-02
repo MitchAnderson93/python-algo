@@ -14,6 +14,9 @@
 ### Other commands for managing the repository:
 - ```pip freeze > requirements.txt``` to add/manage new dependencies 
 
+### Running tests:
+- ```pytest tests/functions/cagr/test.py``` to validate an individual function
+
 ### Included in this repository:
 ``` 
 ├── env/                    # Not committed.

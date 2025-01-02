@@ -2,10 +2,7 @@ import os
 import sys
 import subprocess
 import argparse
-
-# Add the project root to sys.path
-project_root = os.path.abspath(os.path.dirname(__file__))
-sys.path.insert(0, project_root)
+import config
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Run the CLI application.")

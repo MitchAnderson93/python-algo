@@ -2,10 +2,13 @@
 import os
 import sys
 
-# Shared utilities
-def log_message(message):
-    if os.getenv('DEBUG', 'false').lower() == 'true':
-        print(f"[LOG]: {message}")
+# Add the project root to sys.path
+project_root = os.path.abspath(os.path.dirname(__file__))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+# Import shared utilities
+from system.utils.common import log_message
 
 # Filepaths
 # Add the lib directory to the Python path
@@ -14,9 +17,6 @@ lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "./lib"))
 data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/csv"))
 raw_path = os.path.join(data_path, "raw")
 processed_path = os.path.join(data_path, "processed")
-
-# sys path for shared functions
-sys.path.append(lib_path)
 
 # Data analysis tasks
 import json
@@ -32,7 +32,7 @@ import csv  # Import the csv module from the standard library
 import requests
 
 try:
-    from lib.metrics import calculate_metrics
+    from system.lib.functions.data.metrics.main import calculate_metrics
     log_message("Successfully imported calculate_metrics from lib.metrics")
 except ModuleNotFoundError as e:
     log_message(f"Error importing calculate_metrics: {e}")

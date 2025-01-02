@@ -1,11 +1,118 @@
-.ipynb_checkpoints
+# Python Bytecode
+*.py[cod]
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Virtual Environments
 env/
-ml/
-training_data
+venv/
+ENV/
+env.bak/
+*.env
+
+# IDE/Editor Configs
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Operating System Files
 .DS_Store
+Thumbs.db
+
+# Test/Cache Files
+.pytest_cache/
+.cache/
+
+# Logs and Reports
+*.log
+*.out
+*.err
+*.pid
+
+# Package Files
+*.egg-info/
+*.eggs/
+*.whl
+dist/
+build/
+
+# Compiled Libraries
+*.so
+*.dylib
+*.dll
+
+# Data and Large Files
+data/
+*.csv
+*.tsv
+*.json
+*.h5
+*.hdf5
+*.parquet
+*.sqlite
+*.db
+*.pdf
+
+# Machine Learning/Training Artifacts
+*.h5
+*.ckpt
+*.weights
+ml/
+training_data/
+
+# Node.js (if applicable)
+node_modules/
+npm-debug.log*
+
+# Other
+*.bak
+*.swp
+
+
+Tidied .gitignore
+Here’s a cleaner version of your .gitignore file with redundancies removed and sections added for clarity:
+
+gitignore
+Copy code
+# Python-related
+*.py[cod]
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Virtual Environments
+env/
+venv/
+
+# Machine Learning/Training
+ml/
+training_data/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# SQLite Databases
 db.sqlite
+
+# Test/Cache Files
+.pytest_cache/
+*/__pycache__/*
+
+# Data Files
 data/csv/.DS_Store
-data/csv/raw/Accepted_Shares.pdf
-data/csv/raw/lvr.pdf
-data/csv/raw/legacy.pdf
+data/csv/raw/*.pdf
+
+# Compiled Libraries
 system/lib/__pycache__/

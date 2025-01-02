@@ -1,12 +1,9 @@
-import os
-import sys
-
-# Add the project root to sys.path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.insert(0, project_root)
+import config  # Ensure the project root is added to sys.path
 
 # Import shared utilities and libraries
-from system.common import sql3, pd, datetime, json, log_message, db_path, calculate_metrics, raw_path, processed_path
+from system.utils.common import log_message
+from system.lib.functions.data.metrics.main import calculate_metrics
+from system.common import sql3, pd, datetime, json, db_path, raw_path, processed_path
 
 # Read CSV data
 conn = sql3.connect(db_path)

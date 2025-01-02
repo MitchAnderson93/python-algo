@@ -27,7 +27,13 @@ df = pd.DataFrame(filtered_securities)
 # Initialize Dash app
 app = dash.Dash(__name__)
 
-app.layout = html.Div([
+app.layout = html.Div(
+    style={
+        "backgroundColor": "#000",  # Set the background color
+        "height": "100vh",            # Ensure the Div covers the full viewport height
+        "margin": "0",
+    }
+    [
     html.H1("Filtered Securities", style={'textAlign': 'left', 'color': 'white'}),
     dash_table.DataTable(
         id='table',
