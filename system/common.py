@@ -1,9 +1,19 @@
-# sys/common.py
+# data analysis etc
 import os
 import sys
+import json
+import sqlite3 as sql3
+import pandas as pd
+from datetime import datetime
+
+# data/scraping etc 
+import fitz  # PyMuPDF
+import re # regex in lvr script
+import csv  # Import the csv module from the standard library
+import requests
 
 # Add the project root to sys.path
-project_root = os.path.abspath(os.path.dirname(__file__))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
@@ -17,19 +27,6 @@ lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "./lib"))
 data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/csv"))
 raw_path = os.path.join(data_path, "raw")
 processed_path = os.path.join(data_path, "processed")
-
-# Data analysis tasks
-import json
-import sqlite3 as sql3
-import pandas as pd
-import yfinance as yf
-from datetime import datetime
-
-# data/scraping etc 
-import fitz  # PyMuPDF
-import re # regex in lvr script
-import csv  # Import the csv module from the standard library
-import requests
 
 try:
     from system.lib.functions.data.metrics.main import calculate_metrics

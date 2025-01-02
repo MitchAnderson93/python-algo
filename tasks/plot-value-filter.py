@@ -28,13 +28,8 @@ df = pd.DataFrame(filtered_securities)
 app = dash.Dash(__name__)
 
 app.layout = html.Div(
-    style={
-        "backgroundColor": "#000",  # Set the background color
-        "height": "100vh",            # Ensure the Div covers the full viewport height
-        "margin": "0",
-    }
     [
-    html.H1("Filtered Securities", style={'textAlign': 'left', 'color': 'white'}),
+    html.H1("Filtered Securities", style={'textAlign': 'left'}),
     dash_table.DataTable(
         id='table',
         columns=[{"name": i, "id": i} for i in df.columns],
@@ -44,18 +39,14 @@ app.layout = html.Div(
             'height': 'auto',
             'minWidth': '100px', 'width': '100px', 'maxWidth': '100px',
             'whiteSpace': 'normal',
-            'backgroundColor': '#303030',
-            'color': 'white',
             'textAlign': 'left'
         },
         style_header={
-            'backgroundColor': '#1f1f1f',
             'fontWeight': 'bold',
-            'color': 'white',
             'textAlign': 'left'
         },
     )
-], style={'backgroundColor': '#000000'})  # Set the background color to black
+]) 
 
 def open_browser():
     webbrowser.open_new("http://127.0.0.1:8050/")

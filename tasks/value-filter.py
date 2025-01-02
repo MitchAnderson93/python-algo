@@ -9,7 +9,7 @@ from system.common import datetime, json, log_message, processed_path, sql3, db_
 
 # Load securities from SQLite database
 conn = sql3.connect(db_path)
-securities_df = pd.read_sql_query("SELECT * FROM LVR", conn)
+securities_df = pd.read_sql_query("SELECT * FROM lvr_filter", conn)
 conn.close()
 
 # Convert DataFrame to list of dictionaries

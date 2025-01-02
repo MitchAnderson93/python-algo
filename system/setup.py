@@ -1,14 +1,20 @@
-import config  # Ensure the project root is added to sys.path
+import os
+import sys
+
+# Add the project root to sys.path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
 # Import shared utilities and libraries
-from system.utils.common import log_message
-from system.lib.functions.data.metrics.main import calculate_metrics
-from system.common import sql3, pd, datetime, json, db_path, raw_path, processed_path
+from utils.common import log_message
+from lib.functions.data.metrics.main import calculate_metrics
+from common import sql3, pd, datetime, json, db_path, raw_path, processed_path
 
 # Read CSV data
 conn = sql3.connect(db_path)
 asx_data = pd.read_csv(os.path.join(raw_path, "listed.csv"))
-asx_data.to_sql('asx', conn, if_exists='replace')
+asx_data.to_sql('asx_all', conn, if_exists='replace')
 
 current_date = datetime.now().strftime("%Y%m%d")
 folder_path = os.path.join(processed_path, current_date)
@@ -42,7 +48,7 @@ if user_input.lower() in ['yes', 'y']:
             merged_df.at[idx, key] = value
         
         # Save progress incrementally
-        merged_df.iloc[[idx]].to_sql('LVR', conn, if_exists='append', index=False)
+        merged_df.iloc[[idx]].to_sql('lvr_filter', conn, if_exists='append', index=False)
         log_message(f"Updated metrics for {stock_code}")
 
     conn.close()

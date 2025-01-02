@@ -1,5 +1,4 @@
 import os 
-import config
 
 # Shared utilities
 def log_message(message):

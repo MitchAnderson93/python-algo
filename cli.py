@@ -2,15 +2,15 @@ import os
 import sys
 import subprocess
 import argparse
-import config
+from art import text2art
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Run the CLI application.")
-parser.add_argument('--debug', action='store_true', help="Enable debug mode")
+parser.add_argument('--logs', action='store_true', help="Enable debug mode")
 args = parser.parse_args()
 
-# Set the DEBUG environment variable based on the --debug flag
-if args.debug:
+# Set the DEBUG environment variable based on the --log flag
+if args.logs:
     os.environ['DEBUG'] = 'true'
 else:
     os.environ['DEBUG'] = 'false'
@@ -59,37 +59,60 @@ def run_task(task_name):
         log_message(f"Error: {task_name} not found in tasks directory.")
 
 # Main functions
-def main():
-    # Check if the database exists
-    if check_database():
-        log_message("Database found at './db.sqlite'.")
-        user_input = input("Do you want to update the database? This will fetch new stock metrics (Y/N): ").strip().lower()
-        if user_input in ["y", "yes", ""]:
-            run_update_script()
-        else:
-            print("\nProceeding without updating the database.")
-            tasks = list_tasks()
-            if tasks:
-                print("\nAvailable tasks:")
-                for i, task in enumerate(tasks, 1):
-                    print(f"{i}. {task}")
-                task_input = input("\nEnter the number of the task you want to run: ").strip()
-                if task_input.isdigit() and 1 <= int(task_input) <= len(tasks):
-                    run_task(tasks[int(task_input) - 1])
-                else:
-                    print("Invalid selection. Exiting...")
-            else:
-                print("No tasks available. Exiting...")
+def display_menu(database_exists):
+    """Display the appropriate menu based on database existence."""
+    heading = text2art("PythonAlgo Tools", font="small")
+    print(heading)
+    if database_exists:
+        print("1. Update Data Source")
+        print("2. List and Run Tasks")
+        print("3. Exit")
     else:
-        log_message("Database not found at './db.sqlite'.")
-        user_input = input("Do you want to setup a new project? This will create the database (Y/N): ").strip().lower()
-        if user_input in ["y", "yes", ""]:
-            run_setup_script()
-        else:
-            print("Exiting...")
-            return
+        print("1. Build New Data Source")
+        print("\nYou need to build a data source to access more features.")
 
-    print("\nProcess complete. Exiting...")
+def main():
+    while True:
+        database_exists = check_database()
+        display_menu(database_exists)
+        choice = input("Enter your choice: ").strip()
+
+        if not database_exists:
+            if choice == "1":
+                user_input = input("This will create a new database. Proceed? (Y/N): ").strip().lower()
+                if user_input in ["y", "yes", ""]:
+                    run_setup_script()
+                else:
+                    print("Skipping setup. Exiting...")
+                    break
+            else:
+                print("Invalid choice. You need to build a data source first.")
+        else:
+            if choice == "1":
+                log_message("Updating data source...")
+                run_update_script()
+
+            elif choice == "2":
+                tasks = list_tasks()
+                if tasks:
+                    print("\nAvailable tasks:")
+                    for i, task in enumerate(tasks, 1):
+                        print(f"{i}. {task}")
+
+                    task_input = input("\nEnter the number of the task you want to run: ").strip()
+                    if task_input.isdigit() and 1 <= int(task_input) <= len(tasks):
+                        run_task(tasks[int(task_input) - 1])
+                    else:
+                        print("Invalid selection.")
+                else:
+                    print("No tasks available.")
+
+            elif choice == "3":
+                print("Exiting...")
+                break
+
+            else:
+                print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()
