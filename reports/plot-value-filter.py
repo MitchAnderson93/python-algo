@@ -2,10 +2,7 @@ import os
 import sys
 import json
 import pandas as pd
-import dash
-from dash import dcc, html
-import dash_table
-from dash.dependencies import Input, Output
+from dash import dash, dcc, html, dash_table
 import webbrowser
 from threading import Timer
 

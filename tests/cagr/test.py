@@ -3,11 +3,11 @@ import sys
 import pytest
 
 # Add the project root to sys.path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from system.lib.functions.simple.cagr.main import calculate_cagr
+from system.lib.functions.cagr.main import calculate_cagr
 
 def test_calculate_cagr():
     # Test normal case
@@ -17,7 +17,7 @@ def test_calculate_cagr():
     assert calculate_cagr(100_000, 100_000, 5) == 0.0
 
     # Test case with negative growth
-    assert round(calculate_cagr(400_000, 200_000, 5), 4) == -0.1487  # -14.87%
+    assert round(calculate_cagr(400_000, 200_000, 5), 4) == -0.1294  # -12.94%
 
     # Test case with short time period
     assert round(calculate_cagr(100_000, 200_000, 1), 4) == 1.0  # 100%

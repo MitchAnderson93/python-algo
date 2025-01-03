@@ -20,8 +20,8 @@ filtered_securities = [
     s for s in securities
     if s["RSI14"] is not None and float(s["RSI14"]) < 30
     and s["current_price"] is not None and s["SMA200"] is not None and float(s["current_price"]) < float(s["SMA200"])
-    # and s["dividend_yield"] is not None and float(s["dividend_yield"]) > 5
-    # and s["portfolio_lvr"] is not None and float(s["portfolio_lvr"]) >= 60
+    and s["dividend_yield"] is not None and float(s["dividend_yield"]) > 5
+    and s["portfolio_lvr"] is not None and float(s["portfolio_lvr"]) >= 60
 ]
 
 # Sort by dividend yield and RSI14

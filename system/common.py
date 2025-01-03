@@ -28,12 +28,6 @@ data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/csv
 raw_path = os.path.join(data_path, "raw")
 processed_path = os.path.join(data_path, "processed")
 
-try:
-    from system.lib.functions.data.metrics.main import calculate_metrics
-    log_message("Successfully imported calculate_metrics from lib.metrics")
-except ModuleNotFoundError as e:
-    log_message(f"Error importing calculate_metrics: {e}")
-
 # Log output
 log_message(f"Database path: {db_path}")
 log_message(f"Data directory: {data_path}")
