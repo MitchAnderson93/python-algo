@@ -48,16 +48,14 @@ build/
 *.dll
 
 # Data and Large Files
-data/
-*.csv
 *.tsv
-*.json
 *.h5
 *.hdf5
 *.parquet
 *.sqlite
 *.db
 *.pdf
+*.numbers
 
 # Machine Learning/Training Artifacts
 *.h5

@@ -4,12 +4,11 @@
 |  _/| || ||  _|| ' \ / _ \| ' \    | |  / _ \/ _ \| |(_-<
 |_|   \_, | \__||_||_|\___/|_||_|   |_|  \___/\___/|_|/__/
       |__/                                                
-
 ```
 
 A python template and set of tools I developed for running regular financial functions, tasks and reports. 
 
-Menu:
+CLI menu:
 
 ```
 1. Tasks - e.g /tasks/look_in_database_for_x.py
@@ -29,28 +28,34 @@ Menu:
 - ```python cli.py``` to run CLI
 - ```--logs```to enable detailed logging as optional argument
 
-### Other commands for managing the repository:
-- ```pip freeze > requirements.txt``` to add/manage new dependencies 
-
 ### Running tests:
 - ```pytest tests/cagr/test.py``` to validate an individual function
 
-### Included in this repository:
+### Other commands for managing the repository:
+- ```pip freeze > requirements.txt``` to add/manage new dependencies 
+
+### Intended to be edited/customised/files added:
 ``` 
-├── env/                    # Not committed.
-├── data/
-│   ├── raw/                # Raw datasets (CSV/JSON) e.g. lvr.csv/listed.csv
-│   ├── processed/          # Cleaned datasets as JSON documents sorted by date generated
+├── data/                   # ./data/ needs to exist with raw and processed subfolders. Files are customisable.   
+│   ├── raw/                # Intended for raw datasets (CSV/JSON) and is referred to in system code as a path.
+│   ├── processed/          # Output directory for processed files (CSV/JSON) and is referred to in system code as a path.
+├── custom_setup/           # A place to customise the setup of the database, runs after general setup if ./custom_setup/ exists.
+│   ├── custom_setup.py     # An example included to show how to customise the sqlite db during setup/update. Only runs if exists in parent folder.
+│   ├── jobs/metrics/       # An example of a job that is run during the included custom_setup.py example, this adds additional data to the database during setup/update cycle.
+├── reports/                # A place to store reports for easy generation from the menu (.py)
+├── tasks/                  # A set of regular tasks that run against the dataset, and exports to data/processed/{date}
+├── functions/              # Functions runs from the CLI and includes an example (CAGR)
+├── tests/                  # Unit tests for reused functions
+```
+
+### Not intended to be edited:
+``` 
+├── env/                    # Not committed but created during setup steps. Do not commit (is covered by default in .gitignore)
 ├── system/                 # System utilities directory
 │   ├── common.py           # Shared imports and utilities
 │   ├── setup.py            # Runs during setup (any python/context)
-│   ├── lib/                # Reusable functions
-│      ├── functions/     
 │   ├── utils/              # Basic utility functions e.g log_message()
-│      ├── common.py
-│      ├── metrics/main.py  # Specific to my use case, 
-├── tasks/                  # A set of regular tasks that run against the dataset, and exports to data/processed/{date}
-├── tests/                  # Unit tests for reused functions
-├── cli.py                  # Start here
-├── requirements.txt        # Dependencies
+│      ├── common.py        # Common packages used throughout
+├── cli.py                  # Start here to run.
+├── requirements.txt        # Dependencies 
 ```

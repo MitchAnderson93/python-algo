@@ -6,11 +6,19 @@ import sqlite3 as sql3
 import pandas as pd
 from datetime import datetime
 
+# Visualising data using dash plotly
+from dash import dash, dcc, html, dash_table
+import webbrowser
+from threading import Timer
+
 # data/scraping etc 
 import fitz  # PyMuPDF
 import re # regex in lvr script
 import csv  # Import the csv module from the standard library
 import requests
+
+# Loading/CLI
+from tqdm import tqdm  # Import tqdm for the progress bar
 
 # Add the project root to sys.path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -24,7 +32,7 @@ from system.utils.common import log_message
 # Add the lib directory to the Python path
 db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../db.sqlite"))
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "./lib"))
-data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/csv"))
+data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data"))
 raw_path = os.path.join(data_path, "raw")
 processed_path = os.path.join(data_path, "processed")
 

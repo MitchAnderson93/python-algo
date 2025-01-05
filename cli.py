@@ -78,8 +78,8 @@ def run_report(report_name):
         log_message(f"Error: {report_name} not found in reports directory.")
 
 def list_libs():
-    """List all directories in the ./system/lib/functions/ directory."""
-    libs_dir = os.path.join(os.path.dirname(__file__), "system", "lib", "functions")
+    """List all directories in the ./functions/ directory."""
+    libs_dir = os.path.join(os.path.dirname(__file__), "functions")
     if not os.path.exists(libs_dir):
         log_message("Error: libs directory not found.")
         return []
@@ -88,16 +88,16 @@ def list_libs():
     return libs
 
 def run_lib_script(lib_name):
-    """Run a specified lib script from the ./system/lib/functions/ directory."""
-    lib_path = os.path.join(os.path.dirname(__file__), "system", "lib", "functions", lib_name, "cli.py")
+    """Run a specified lib script from the ./functions/ directory."""
+    lib_path = os.path.join(os.path.dirname(__file__), "functions", lib_name, "cli.py")
     if os.path.exists(lib_path):
         subprocess.run(["python", lib_path])
     else:
         log_message(f"Error: {lib_name} CLI script not found in lib directory.")
 
 def run_function_script(lib_name):
-    """Run a specified function script from the ./system/lib/functions/ directory."""
-    lib_path = os.path.join(os.path.dirname(__file__), "system", "lib", "functions", lib_name, "cli.py")
+    """Run a specified function script from the ./functions/ directory."""
+    lib_path = os.path.join(os.path.dirname(__file__), "functions", lib_name, "cli.py")
     if os.path.exists(lib_path):
         # Print expected input format for the selected function
         subprocess.run(["python", lib_path, "--print-expected-input"])
