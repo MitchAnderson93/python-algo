@@ -1,5 +1,6 @@
 import os
 import sys
+import pandas as pd
 
 # Add the project root to sys.path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
@@ -11,6 +12,18 @@ import logging
 import yfinance as yf
 logging.getLogger("yfinance").setLevel(logging.CRITICAL)
 
+def get_dividend_yield(stock_info, current_price):
+    """Get dividend yield from Yahoo Finance with manual verification flag."""
+    try:
+        info = stock_info.info
+        if 'dividendYield' in info and info['dividendYield'] is not None:
+            div_yield = round(info['dividendYield'] * 100, 2)
+            if div_yield > 15:  # Flag suspicious yields
+                log_message(f"Warning: High dividend yield ({div_yield}%) detected for {stock_info.ticker}. Please verify manually.")
+            return div_yield
+    except Exception as e:
+        log_message(f"Error getting dividend yield from Yahoo Finance: {e}")
+        return None
 
 def calculate_metrics(stock_code):
     stock_data = yf.download(stock_code, period="max", progress=False)
@@ -43,23 +56,7 @@ def calculate_metrics(stock_code):
     ATL = stock_data['Close'].min()
     current_price = stock_data['Close'].iloc[-1]
 
-    try:
-        one_year_ago = stock_info.history(period="1y").index[0]
-        dividends_past_year = stock_info.dividends.loc[one_year_ago:]
-    except Exception as e:
-        log_message(f"Error with 1-year lookback for {stock_code}: {e}. Using max period as fallback.")
-        dividends_past_year = stock_info.dividends
-
-    if dividends_past_year.empty:
-        try:
-            max_period_ago = stock_info.history(period="max").index[0]
-            dividends_past_year = stock_info.dividends.loc[max_period_ago:]
-        except Exception as e:
-            log_message(f"Error with max period lookback for {stock_code}: {e}. No dividends available.")
-            dividends_past_year = pd.Series([])
-
-    ttm_dividends = dividends_past_year.sum()
-    dividend_yield = (ttm_dividends / current_price) * 100
+    dividend_yield = get_dividend_yield(stock_info, current_price)
 
     return {
         'RSI14': RSI.iloc[-1],

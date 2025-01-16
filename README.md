@@ -11,7 +11,7 @@ A python template and set of tools I developed for running regular financial fun
 CLI menu:
 
 ```
-1. Tasks - e.g /tasks/look_in_database_for_x.py
+1. Tasks - e.g /tasks/do_this.py
 2. Functions - One off functions (calculate CAGR)
 3. Reports - e.g. reports/visualize-x.py 
 4. Update local data source (sqlite) - Reruns system/setup.py 
